@@ -35,6 +35,8 @@
 %              - Romande,  - Palatino,  - Times,  - Stix,  - Helvetica,  - Utopia.
 %  inDay/inNight: [inDay=true], the mode of the output. inDay is the normal mode, while
 %                               using inNight could turns the output dark.
+%  draft: [false], a convenient setting for users to write draft, because all figures
+%         would be disabled.
 % % ----------------------
 % % Command & Environment
 %  (C marks a command and E marks an environment.)
@@ -139,17 +141,16 @@
   \newcommand{\CKBIB@str@reftitle}{\vspace{2.5em} \section*{\refname}}
 \fi
 
-\LoadClass[10pt,openany,final]{memoir}
-
-%\RequirePackage{geometry}
+\ifCKBIB@opt@draft
+  \LoadClass[10pt,openany,draft]{memoir}
+\else
+  \LoadClass[10pt,openany,final]{memoir}
+\fi
 
 \widowpenalty 3999
 \clubpenalty 3999
 \RequirePackage{pdfpages}
 \RequirePackage[english]{babel}
-%\RequirePackage{parallel}
-%\newcommand{\litem}[1]{\ParallelLText{\parindent=0em #1}}%
-%\newcommand{\ritem}[1]{\ParallelRText{\parindent=0em #1} \ParallelPar}%
 \RequirePackage{paracol}
 \newcommand{\litem}[1]{\begin{column*}\parindent=0em #1\end{column*}}
 \newcommand{\ritem}[1]{\begin{column}\parindent=0em #1\end{column}}
