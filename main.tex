@@ -1,15 +1,18 @@
-\documentclass[Chinese]{CKBib}
+\documentclass[Chinese,inNight]{CKBib}
 
 \CKBIBsetup{
-  title = {\textbf{查经笔记}}
+  title = {周四团契预查笔记}
 }
 
 \newcommand{\BibLength}{0.38\textwidth}
 \newcommand{\TexLength}{0.58\textwidth}
+\setcolumnwidth{\BibLength, \TexLength}
+\setlength{\columnseprule}{0.5pt}
 
+\newcommand{\queref}[1]{\hyperref[#1]{(\ref*{#1})}}
 \newcommand{\FormedWidth}{\paperwidth}
 \newcommand{\FormedHeight}{\paperheight}
-\newcommand{\Includepage}[2]{\includepdf[pages=#1,templatesize={\FormedWidth}{\FormedHeight},pagecommand={\thispagestyle{empty},\setcounter{page}{0}}]{#2}}
+\newcommand{\Includepage}[2]{\includepdf[pages=#1,templatesize={\FormedWidth}{\FormedHeight},pagecommand={\thispagestyle{empty}\setcounter{page}{0}}]{#2}}
 
 \begin{document}
 \pagenumbering{Roman}
@@ -83,7 +86,7 @@ Houston Chinese Church\\
 
 \noindent The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-\noindent THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+\noindent THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WH-ETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 \end{footnotesize}
 
@@ -123,6 +126,34 @@ Houston Chinese Church\\
 传讲福音需要我们做到真正的谦卑。神的真道何其浩然，凭我们一众凡人的理解，尚不能及其皮毛。但这真真切切的是我们的大使命，藉着神满有恩慈的应许，见证神救赎计划不断的成就。
 
 在本章，我们希望能收录一些传讲福音的困惑和心得。在这项辑录工作发起之初，这里仍然是一片白纸，但是随着我们的共同成长，愿众人时时加添，将这里浇灌成参天大树。
+
+\section*{编译要求}
+
+本书采用{\LaTeXe}和{\XeTeX}编译，除此之外，还需要安装以下字体到\textbf{操作系统}中：
+
+\SansF{思源黑体}\normalfont\selectfont: \href{https://blog.typekit.com/alternate/source-han-sans-chs/}{\Mundus}；\LightF{思源宋体}\normalfont\selectfont: \href{https://source.typekit.com/source-han-serif/cn/}{\Mundus}
+
+安装完成后，
+
+\begin{enumerate}
+  \item 执行\texttt{main.tex}编译一次。
+  \item 执行项目目录下的\texttt{bibtex.bat}，生成参考文献列表。
+  \item 重新执行\texttt{main.tex}，直到交叉引用警告全部消失即可。
+\end{enumerate}
+
+除此之外，还有一个版本，\texttt{singlechap.tex}是用来生成单章内容的。本工程使用的模板经过了特别设计，还能实现包括\textbf{夜间模式}的一些功能，如果需要，请查阅模板说明。
+
+\section*{其他}
+
+需要特别说明的是，后续的所有章节中，我们会使用如下不同的标记来区分、代表出不同时期添加的记录。例如，
+
+\Tbib{这样的文字代表神的话。}
+
+这样的文字代表预查时期添加的内容。
+
+\Tafter{这样的文字代表在接下来的周四团契后添加的内容。}
+
+\Tadd{这样的文字代表因为其他原因添加的内容。}
 
 \cleardoublepage
 

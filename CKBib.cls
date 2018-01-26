@@ -2,6 +2,48 @@
 % Cain King's Bible Notes Template
 % LaTeX Template
 % -----------------------------------
+% % Update statements:
+% -----------------------------------
+% % Version 1.0 (1/26/18)
+%     - Create and revise the template.
+% -----------------------------------
+% % Control options statements:
+% -----------------------------------
+% % ----------------------
+% % Text Configuration
+%  (It is highly recommended to master them. Use \CKBIBsetup{} to
+%   change them)
+% %
+%  title            : [string], the title of pdf metadata, also shown in head.
+%  author           : [string], the author of pdf metadata.
+%  ownerPass        : [string], password, if not provided, users could not edit
+%                     this document.
+%  userPass         : [string], password, if not provided, users could not open
+%                     this document.
+%                       - Noted that if ownerPass is not defined, this password 
+%                         will not be effective!
+%  repeatFrameTitle : [bool], let all frame which are divided by pagebreak remake
+%                     their titles.
+% % ----------------------
+% % Basic Configuration
+%  (Options influencing the style. Use them as \documentclass[...]{CKBIB}
+%     because \CKBIBsetup will not work.)
+%  (Noted that [] shows the default option.)
+% %
+%  color :   [false], make links, section titles and frames colored.
+%  mainfont: [Romande], use different types of fontfamily. Here are avaliable options:
+%              - Romande,  - Palatino,  - Times,  - Stix,  - Helvetica,  - Utopia.
+%  inDay/inNight: [inDay=true], the mode of the output. inDay is the normal mode, while
+%                               using inNight could turns the output dark.
+% % ----------------------
+% % Command & Environment
+%  (C marks a command and E marks an environment.)
+% %
+% % \maketitle {C}
+%   - Used to make a modified title.
+% % \CKBIBsetup {C}
+%   - Basic setup command of the control options.
+% -----------------------------------
 % % Publications:
 % -----------------------------------
 % Author:
@@ -21,6 +63,8 @@
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{color}
 \DeclareComplementaryOption{gray}{color}
+\DeclareBoolOption[false]{inNight}
+\DeclareComplementaryOption{inDay}{inNight}
 \DeclareBoolOption[false]{Chinese}
 \DeclareComplementaryOption{deChinese}{Chinese}
 \DeclareBoolOption[false]{repeatFrameTitle}
@@ -97,9 +141,12 @@
 \clubpenalty 3999
 \RequirePackage{pdfpages}
 \RequirePackage[english]{babel}
-\RequirePackage{parallel}
-\newcommand{\litem}[1]{\ParallelLText{\parindent=0em {#1}}}%
-\newcommand{\ritem}[1]{\ParallelRText{\parindent=0em {#1}} \ParallelPar}%
+%\RequirePackage{parallel}
+%\newcommand{\litem}[1]{\ParallelLText{\parindent=0em #1}}%
+%\newcommand{\ritem}[1]{\ParallelRText{\parindent=0em #1} \ParallelPar}%
+\RequirePackage{paracol}
+\newcommand{\litem}[1]{\begin{column*}\parindent=0em #1\end{column*}}
+\newcommand{\ritem}[1]{\begin{column}\parindent=0em #1\end{column}}
 
 \newcommand\Loadedframemethod{TikZ}
 \RequirePackage[framemethod=\Loadedframemethod]{mdframed}
@@ -116,7 +163,7 @@
 \usetikzlibrary{decorations.pathmorphing} 
 
 \RequirePackage{enumitem} % Customize lists %\RequirePackage{enumerate}
-\setlist[enumerate]{label=(\arabic*)}
+\setlist[enumerate]{label=(\arabic*),itemsep=0.1\itemsep,parsep=0ex}
 \RequirePackage{mathpazo} 
 
 %Ecriture arabe
@@ -149,6 +196,7 @@
 }
 %\RequirePackage{multirow,dsfont}
 \RequirePackage{xcolor}
+\RequirePackage{marvosym}
 %\RequirePackage{tabularx,array}
 
 \ifthenelse{\equal{\CKBIB@opt@ownerPass}{}}{}{
@@ -173,7 +221,7 @@
   \RequirePackage[hidelinks]{hyperref}
 \fi
 
-\hypersetup{pdfdisplaydoctitle={true}}
+\hypersetup{pdfdisplaydoctitle={true},breaklinks={true}}
 
 \ifpdf
   \hypersetup{pdfcreator={pdfLaTeX}}
@@ -195,8 +243,8 @@
 \newcommand{\getmark}{}
 \newcommand{\setmark}[1]{\renewcommand{\getmark}{#1}}
 \pagestyle{ruled}
-\makeoddhead{ruled}{\small\scshape \CKBIB@opt@title}{}{\small\emph{\getmark}\qquad\thepage}
-\makeevenhead{ruled}{\small\thepage\qquad\emph{\getmark}}{}{\small\scshape \CKBIB@opt@title}
+\makeoddhead{ruled}{\small\scshape\bfseries\CKBIB@opt@title}{}{\small\emph{\getmark}\qquad\thepage}
+\makeevenhead{ruled}{\small\thepage\qquad\emph{\getmark}}{}{\small\scshape\bfseries\CKBIB@opt@title}
 
 \tikzstyle{titregris} =
 [draw=gray,fill=white, shading = exersicetitle, %
@@ -261,17 +309,71 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
     skipabove=0pt, skipbelow=0pt
 }
 
-\definecolor{gray}{gray}{0.77}
-\definecolor{black}{gray}{0}
+\ifCKBIB@opt@inNight
+  \definecolor{pageBGColor}{gray}{0.1}
+  \definecolor{TBibleColor}{RGB}{255,255,191}
+  \definecolor{TNormalColor}{RGB}{255,255,255}
+  \definecolor{TAfterColor}{RGB}{191,191,255}
+  \definecolor{TAdditionColor}{RGB}{255,191,191}
+  \pagecolor{pageBGColor}
+  \definecolor{graphgray}{gray}{.9}
+  \definecolor{mygray}{gray}{.2}
+  \definecolor{chapgray}{gray}{0.33}
+  \definecolor{chapblack}{gray}{1}
+\else
+  \definecolor{TNormalColor}{RGB}{0,0,0}
+  \definecolor{TAfterColor}{RGB}{0,0,64}
+  \definecolor{TAdditionColor}{RGB}{64,0,0}
+  \definecolor{TBibleColor}{RGB}{64,64,0}
+  \definecolor{mygray}{gray}{.9}
+  \definecolor{chapgray}{gray}{0.77}
+  \definecolor{chapblack}{gray}{0}
+\fi
+
+\newcommand{\Tafter}[1]{\textcolor{TAfterColor}{#1}}
+\newcommand{\Tadd}[1]{\textcolor{TAdditionColor}{#1}}
+\newcommand{\Tbib}[1]{\textcolor{TBibleColor}{#1}}
+
+\def\includeCKBgraph{\futurelet\next\includeCKBgraphAux}
+\def\includeCKBgraphAux{
+  \ifx\next[%
+    \expandafter\includeCKBgraphOptArg
+  \else
+    \expandafter\includeCKBgraphArg
+  \fi
+}
+
+\ifCKBIB@opt@inNight
+  \newcommand{\includegraphprotected}[2]{\colorbox{graphgray}{\includegraphics[#1]{#2}}}
+\else
+  \newcommand{\includegraphprotected}[2]{\includegraphics[#1]{#2}}
+\fi
+
+\ifCKBIB@opt@draft
+  \def\includeCKBgraphOptArg[#1]#2{\relax
+    \includegraphprotected{#1,draft}{#2}
+  }
+  \def\includeCKBgraphArg#1{\relax
+    \includegraphprotected{width=0.8\columnwidth,draft}{#1}
+  }
+\else
+  \def\includeCKBgraphOptArg[#1]#2{\relax
+    \includegraphprotected{#1}{#2}
+  }
+  \def\includeCKBgraphArg#1{\relax
+    \includegraphprotected{width=0.8\columnwidth}{#1}
+  }
+\fi
+
 \setlength\beforechapskip{0pt}
 \setlength\midchapskip{5pt}
 \setlength\afterchapskip{30pt}
 \makechapterstyle{plroman}{
 \renewcommand\chapternamenum{}
 \renewcommand\printchaptername{}
-\renewcommand\printchapternum{\color{gray}\centering\MakeUppercase{\fontsize{1in}{2in}\selectfont\romannumeral\thechapter}}
+\renewcommand\printchapternum{\color{chapgray}\centering\MakeUppercase{\fontsize{1in}{2in}\selectfont\romannumeral\thechapter}}
 \renewcommand\chapnumfont{\HUGE\rmfamily\centering\romannumeral}
-\renewcommand\chaptitlefont{\Huge\centering\color{black}\vskip\midchapskip\vskip\midchapskip}
+\renewcommand\chaptitlefont{\Huge\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
 \renewcommand\afterchapternum{%
 \par\nobreak\vskip\midchapskip\vskip\midchapskip}
 \renewcommand\printchapternonum{%
@@ -358,7 +460,6 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 
 %===============Shade Quote Settings===================
 \RequirePackage{framed}
-\definecolor{mygray}{gray}{.9}
 
 \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine as the quote font  
 %\newcommand{\quotefont}{}
@@ -406,8 +507,8 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 
 \newcommand{\includechapter}[1]{\include{#1} \cleardoublepage}
 \newcommand{\BibSentence}[4]{\begin{shadequote}[r]{\textbf{\SansF{#1~#2:#3}}}\normalfont #4\end{shadequote}}
-\newcommand{\BibT}[2]{\SansF{#1~#2:}\normalfont\selectfont}
-\newcommand{\BibS}[2]{${}^{\textrm{\footnotesize #1}}$#2}
+\newcommand{\BibT}[2]{\textcolor{TBibleColor}{\SansF{#1~#2:}\normalfont\selectfont}}
+\newcommand{\BibS}[2]{\textcolor{TBibleColor}{${}^{\textrm{\footnotesize #1}}$#2}}
 \ifCKBIB@opt@Chinese
   \newcommand{\Lord}{　神}
 \else
@@ -416,11 +517,9 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 
 \linespread{1.2}
 \setlength{\parskip}{0ex}
-\setlength{\parsep}{0ex} 
-\setlength{\itemsep}{0ex}
 \setlength{\parindent}{2em}
 
-\usepackage[sectionbib,sort&compress,numbers]{natbib}
+\RequirePackage[sectionbib,sort&compress,numbers]{natbib}
 \RequirePackage[sectionbib]{chapterbib}
 %\RequirePackage{multibib}
 %\ifCKBIB@opt@Chinese
@@ -428,6 +527,15 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 %\else
 %  \newcites{cptone}{Reference}
 %\fi
+
+\RequirePackage{xltxtra}
+
+\makeatletter
+\newcommand{\globalcolor}[1]{%
+  \color{#1}\global\let\default@color\current@color
+}
+
+\AtBeginDocument{\globalcolor{TNormalColor}}
   
 % Removes the header from odd empty pages at the end of chapters
 \makeatletter
