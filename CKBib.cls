@@ -507,7 +507,7 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 
 \newcommand{\includechapter}[1]{\include{#1} \cleardoublepage}
 \newcommand{\BibSentence}[4]{\begin{shadequote}[r]{\textbf{\SansF{#1~#2:#3}}}\normalfont #4\end{shadequote}}
-\newcommand{\BibT}[2]{\textcolor{TBibleColor}{\SansF{#1~#2:}\normalfont\selectfont}}
+\newcommand{\BibT}[3][:]{\textcolor{TBibleColor}{\SansF{#2~#3#1}\normalfont\selectfont}}
 \newcommand{\BibS}[2]{\textcolor{TBibleColor}{${}^{\textrm{\footnotesize #1}}$#2}}
 \ifCKBIB@opt@Chinese
   \newcommand{\Lord}{　神}
