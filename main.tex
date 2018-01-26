@@ -15,8 +15,8 @@
 \newcommand{\Includepage}[2]{\includepdf[pages=#1,templatesize={\FormedWidth}{\FormedHeight},pagecommand={\thispagestyle{empty}\setcounter{page}{0}}]{#2}}
 
 \begin{document}
+\frontmatter
 \pagenumbering{Roman}
-\mainmatter
 
 \thispagestyle{empty}
 \pagestyle{empty}
@@ -110,8 +110,7 @@ Houston Chinese Church\\
 
 \thispagestyle{ruled}
 \pagestyle{ruled}
-\setcounter{page}{1} 
-\pagenumbering{arabic}
+\mainmatter
 
 \chapter*{\chapFont 引子}
 \setmark{引子}

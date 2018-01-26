@@ -76,6 +76,7 @@
 \DeclareStringOption[Yuchen Jin]{author}[Yuchen Jin]
 \DeclareStringOption[UH Bible Study Group]{organization}[UH Bible Study Group]
 \DeclareStringOption[]{version}[]
+\DeclareStringOption[0]{singchap}[0]
 
 \DeclareStringOption[]{ownerPass}[]
 \DeclareStringOption[]{userPass}[]
@@ -89,9 +90,14 @@
       pdfauthor={\CKBIB@opt@author},% 
       pdftitle={\CKBIB@opt@title},%
       pdfsubject={Bible Study},%
-      pdfstartview={Fit},%
-      pdfpagelayout={TwoPageRight}
+      pdfstartview={Fit}%
       %pdfkeywords={}%
+    }
+    \ifthenelse{\equal{\CKBIB@opt@singchap}{0}}{
+      \hypersetup{pdfpagelayout={TwoPageRight}}
+    }{
+      \hypersetup{pdfpagelayout={TwoPageLeft}}
+      \setcounter{chapter}{\CKBIB@opt@singchap-1}
     }
   \fi
   \ifCKBIB@opt@repeatFrameTitle
@@ -237,8 +243,14 @@
   pdfauthor={\CKBIB@opt@author},%
   pdftitle={\CKBIB@opt@title},%
   pdfsubject={Bible Study},%
-  pdfstartview={Fit},%
-  pdfpagelayout={TwoPageRight}}
+  pdfstartview={Fit}}
+  
+\ifthenelse{\equal{\CKBIB@opt@singchap}{0}}{
+  \hypersetup{pdfpagelayout={TwoPageRight}}
+}{
+  \hypersetup{pdfpagelayout={TwoPageLeft}}
+  \setcounter{chapter}{\CKBIB@opt@singchap-1}
+}
 
 \newcommand{\getmark}{}
 \newcommand{\setmark}[1]{\renewcommand{\getmark}{#1}}
