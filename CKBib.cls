@@ -45,6 +45,28 @@
 %   - Used to make a modified title.
 % % \CKBIBsetup {C}
 %   - Basic setup command of the control options.
+% % Some commands for emphasizing texts:
+%   - \Tbib {C}: used to emphasize the words of LORD.
+%   - \Tafter {C}: used to emphasize what we add after the fellowship on the next 
+%                  Thursday.
+%   - \Tadd {C}: used to emphasize what we add for other reasons (commonly for futher
+%                modification.)
+% % Some commands for refer the context of LORD's words:
+%   - \BibSentence{Tit}{NumC}{NumS}{Context}: {C} used to refer a complete block.
+%     Tit is the name of the book; NumC is the number of chapter; NumS is the number 
+%     of the section; Context is as the name.
+%     This reference would be formed as a gray block which contains LORD's word. 
+%   - \BibT{Tit}{Num}: {C} used to refer the marks of sentences of Bible.
+%                      Tit is the title of the book; Num is the number of those 
+%                      sentences.
+%   - \BibS{Num}{Context}: {C} used to refer one specific sentence of Bible.
+%                      Num is the number of the section; Context is used as the name. 
+% \begin{paracol}{2} ... \end{paracol} {E}
+%   - Environment for parallel type-out. Here are some commands should only be used 
+%     in this environment.
+%     -|- \litem {C}: the left side of one block. Must be followed by \ritem and 
+%                     should not follow another \litem.
+%     -|- \ritem {C}: the right side of one block. Must follow \litem.
 % -----------------------------------
 % % Publications:
 % -----------------------------------
