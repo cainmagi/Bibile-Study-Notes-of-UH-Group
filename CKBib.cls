@@ -275,6 +275,40 @@
   \setcounter{chapter}{\CKBIB@opt@singchap-1}
 }
 
+\RequirePackage{titletoc}
+%================LanguageSettings====================
+\ifCKBIB@opt@Chinese
+  \RequirePackage[PunctStyle=kaiming,AutoFakeBold,AutoFakeSlant]{xeCJK}
+  \setCJKmainfont[BoldFont={Source Han Serif SC SemiBold}, ItalicFont={STKaiti}]{Source Han Serif SC}
+  \setCJKmonofont[BoldFont={Source Han Serif SC SemiBold}, ItalicFont={STKaiti}]{Source Han Serif SC Medium} %思源常体
+  \newCJKfontfamily[syseribol]\ExtBoldF[BoldFont={Source Han Serif SC Heavy}, ItalicFont={STKaiti}]{Source Han Serif SC Bold} %思源粗宋
+  \newCJKfontfamily[syseriexl]\LightF[BoldFont={Source Han Serif SC Light}, ItalicFont={STKaiti}]{Source Han Serif SC ExtraLight} %思源特细宋
+  \newCJKfontfamily[sysansbol]\ExtBoldSansF[BoldFont={Source Han Sans SC Heavy}, ItalicFont={STKaiti}]{Source Han Sans SC Bold} %思源粗黑
+  \newCJKfontfamily[sysansreg]\SansF[BoldFont={Source Han Sans SC Medium}, ItalicFont={Source Han Sans SC Regular}]{Source Han Sans SC Regular} %思源常黑
+  \newCJKfontfamily[sysansexl]\LightSansF[BoldFont={Source Han Sans SC Light}, ItalicFont={STKaiti}]{Source Han Sans SC ExtraLight} %思源特细黑
+  \setCJKsansfont[BoldFont={Source Han Sans SC Medium}, ItalicFont={STKaiti}]{Source Han Sans SC Regular}% 设置缺省中文字体
+  \setCJKfallbackfamilyfont{\CJKrmdefault}{SimSun-ExtB}
+  \setCJKfallbackfamilyfont{\CJKsfdefault}{PMingLiU}
+  \renewcommand\contentsname{目~~录}
+  \renewcommand\listfigurename{插~图~目~录} % 对List of Figures进行汉化为插图目录
+  \renewcommand\listtablename{表~格~目~录}  % 对List of Tables进行汉化表格目录
+  %\newenvironment{proof}[1][证明]{\textbf{#1:~~~}}{\hfill\hspace{\qquad}$\square$}
+  \addto\extrasenglish{%
+    \def\chapterautorefname{章}
+    \def\sectionautorefname{节}
+    \def\subsectionautorefname{节}
+    \renewcommand{\figurename}{图}
+    \renewcommand{\tablename}{表}
+    \renewcommand{\figureautorefname}{图}
+    \renewcommand{\tableautorefname}{表}
+  }
+  \newcommand{\chapFont}{\ExtBoldSansF}
+  \newcommand{\secFont}{\SansF\bfseries}
+\else
+  \newcommand{\chapFont}{\sffamily\bfseries}
+  \newcommand{\secFont}{\sffamily\bfseries}
+\fi
+
 \newcommand{\getmark}{}
 \newcommand{\setmark}[1]{\renewcommand{\getmark}{#1}}
 \pagestyle{ruled}
@@ -408,7 +442,11 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 \renewcommand\printchaptername{}
 \renewcommand\printchapternum{\color{chapgray}\centering\MakeUppercase{\fontsize{1in}{2in}\selectfont\romannumeral\thechapter}}
 \renewcommand\chapnumfont{\HUGE\rmfamily\centering\romannumeral}
-\renewcommand\chaptitlefont{\Huge\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
+\ifCKBIB@opt@Chinese
+  \renewcommand\chaptitlefont{\Huge\chapFont\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
+\else
+  \renewcommand\chaptitlefont{\Huge\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
+\fi
 \renewcommand\afterchapternum{%
 \par\nobreak\vskip\midchapskip\vskip\midchapskip}
 \renewcommand\printchapternonum{%
@@ -458,40 +496,6 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 %================Theorem definition====================
 \mdtheorem[style=theoremstyle]{definition}{\textbf{Exercice}}
 \providecommand*{\definitionautorefname}{Exercise}
-
-\RequirePackage{titletoc}
-%================LanguageSettings====================
-\ifCKBIB@opt@Chinese
-  \RequirePackage[PunctStyle=kaiming,AutoFakeBold,AutoFakeSlant]{xeCJK}
-  \setCJKmainfont[BoldFont={Source Han Serif SC SemiBold}, ItalicFont={STKaiti}]{Source Han Serif SC}
-  \setCJKmonofont[BoldFont={Source Han Serif SC SemiBold}, ItalicFont={STKaiti}]{Source Han Serif SC Medium} %思源常体
-  \newCJKfontfamily[syseribol]\ExtBoldF[BoldFont={Source Han Serif SC Heavy}, ItalicFont={STKaiti}]{Source Han Serif SC Bold} %思源粗宋
-  \newCJKfontfamily[syseriexl]\LightF[BoldFont={Source Han Serif SC Light}, ItalicFont={STKaiti}]{Source Han Serif SC ExtraLight} %思源特细宋
-  \newCJKfontfamily[sysansbol]\ExtBoldSansF[BoldFont={Source Han Sans SC Heavy}, ItalicFont={STKaiti}]{Source Han Sans SC Bold} %思源粗黑
-  \newCJKfontfamily[sysansreg]\SansF[BoldFont={Source Han Sans SC Medium}, ItalicFont={Source Han Sans SC Regular}]{Source Han Sans SC Regular} %思源常黑
-  \newCJKfontfamily[sysansexl]\LightSansF[BoldFont={Source Han Sans SC Light}, ItalicFont={STKaiti}]{Source Han Sans SC ExtraLight} %思源特细黑
-  \setCJKsansfont[BoldFont={Source Han Sans SC Medium}, ItalicFont={STKaiti}]{Source Han Sans SC Regular}% 设置缺省中文字体
-  \setCJKfallbackfamilyfont{\CJKrmdefault}{SimSun-ExtB}
-  \setCJKfallbackfamilyfont{\CJKsfdefault}{PMingLiU}
-  \renewcommand\contentsname{目~~录}
-  \renewcommand\listfigurename{插~图~目~录} % 对List of Figures进行汉化为插图目录
-  \renewcommand\listtablename{表~格~目~录}  % 对List of Tables进行汉化表格目录
-  %\newenvironment{proof}[1][证明]{\textbf{#1:~~~}}{\hfill\hspace{\qquad}$\square$}
-  \addto\extrasenglish{%
-    \def\chapterautorefname{章}
-    \def\sectionautorefname{节}
-    \def\subsectionautorefname{节}
-    \renewcommand{\figurename}{图}
-    \renewcommand{\tablename}{表}
-    \renewcommand{\figureautorefname}{图}
-    \renewcommand{\tableautorefname}{表}
-  }
-  \newcommand{\chapFont}{\ExtBoldSansF}
-  \newcommand{\secFont}{\SansF\bfseries}
-\else
-  \newcommand{\chapFont}{\sffamily\bfseries}
-  \newcommand{\secFont}{\sffamily\bfseries}
-\fi
 
 %===============Shade Quote Settings===================
 \RequirePackage{framed}
