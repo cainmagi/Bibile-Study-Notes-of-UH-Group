@@ -4,6 +4,9 @@
 % -----------------------------------
 % % Update statements:
 % -----------------------------------
+% % Version 1.2 (1/28/18)
+%     - Revise the format of contents.
+%     - Add env. for control the appendices of a part.
 % % Version 1.0 (1/26/18)
 %     - Create and revise the template.
 % -----------------------------------
@@ -61,12 +64,16 @@
 %                      sentences.
 %   - \BibS{Num}{Context}: {C} used to refer one specific sentence of Bible.
 %                      Num is the number of the section; Context is used as the name. 
-% \begin{paracol}{2} ... \end{paracol} {E}
+% % \begin{paracol}{2} ... \end{paracol} {E}
 %   - Environment for parallel type-out. Here are some commands should only be used 
 %     in this environment.
 %     -|- \litem {C}: the left side of one block. Must be followed by \ritem and 
 %                     should not follow another \litem.
 %     -|- \ritem {C}: the right side of one block. Must follow \litem.
+% % \begin{appendices} ... \end{appendices} {E}
+%   - Environment of appendices. This env. enable users to append more than one 
+%     appendices to the same part. (May need to pay attention to \setmark when using
+%     this env..)
 % -----------------------------------
 % % Publications:
 % -----------------------------------
@@ -81,6 +88,7 @@
 \ProvidesClass{CKBib}[2017/08/29 v1.0 Bible Notes Class - Author: Yuchen Jin]
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
+\RequirePackage{xstring}
 \RequirePackage{ifthen, calc}
 \SetupKeyvalOptions{family=CKBIB, prefix=CKBIB@opt@, setkeys=\kvsetkeys}
 
@@ -310,7 +318,7 @@
 \fi
 
 \newcommand{\getmark}{}
-\newcommand{\setmark}[1]{\renewcommand{\getmark}{#1}}
+\newcommand{\setmark}[1]{\protect\renewcommand{\getmark}{#1}}
 \pagestyle{ruled}
 \makeoddhead{ruled}{\small\scshape\bfseries\CKBIB@opt@title}{}{\small\emph{\getmark}\qquad\thepage}
 \makeevenhead{ruled}{\small\thepage\qquad\emph{\getmark}}{}{\small\scshape\bfseries\CKBIB@opt@title}
@@ -437,24 +445,28 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 \setlength\beforechapskip{0pt}
 \setlength\midchapskip{5pt}
 \setlength\afterchapskip{30pt}
+
+\newcommand{\chapnumcase}[1]{\IfInteger{#1}{\MakeUppercase{\mdseries\romannumeral#1}}{#1}}
+\newcommand{\chapnumcaseplain}[1]{\IfInteger{#1}{\romannumeral#1}{#1}}
 \makechapterstyle{plroman}{
-\renewcommand\chapternamenum{}
-\renewcommand\printchaptername{}
-\renewcommand\printchapternum{\color{chapgray}\centering\MakeUppercase{\fontsize{1in}{2in}\selectfont\romannumeral\thechapter}}
-\renewcommand\chapnumfont{\HUGE\rmfamily\centering\romannumeral}
-\ifCKBIB@opt@Chinese
-  \renewcommand\chaptitlefont{\Huge\chapFont\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
-\else
-  \renewcommand\chaptitlefont{\Huge\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
-\fi
-\renewcommand\afterchapternum{%
-\par\nobreak\vskip\midchapskip\vskip\midchapskip}
-\renewcommand\printchapternonum{%
-\vphantom{\chapnumfont \thechapter}
-\par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip}
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\chapnumfont{\HUGE\rmfamily\centering}
+  \ifCKBIB@opt@Chinese
+    \renewcommand\chaptitlefont{\Huge\chapFont\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
+  \else
+    \renewcommand\chaptitlefont{\Huge\centering\color{chapblack}\vskip\midchapskip\vskip\midchapskip}
+  \fi
+  \renewcommand\afterchapternum{%
+  \par\nobreak\vskip\midchapskip\vskip\midchapskip}
+  \renewcommand\printchapternum{\color{chapgray}\centering{\fontsize{1in}{2in}\selectfont\protect\chapnumcase{\thechapter}}}
+  \renewcommand\printchapternonum{%
+  \vphantom{\chapnumfont\protect\chapnumcaseplain{\thechapter}}
+  \par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip}
+  
 }
 \chapterstyle{plroman}
-
+\renewcommand{\chapternumberline}[1]{\hspace*{-5em}\vbox{\hfil\hsize=7.5em\protect\chapnumcase{#1}.\ \hfilneg}}
 %%% customizing of table of contents
 
 \renewcommand{\cftchapterfont}{\scshape\mdseries}
@@ -463,7 +475,7 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 
 \renewcommand{\cftchapterpagefont}{\scshape\mdseries}
 
-\renewcommand{\chapternumberline}[1]{\hspace*{-5em}\vbox{\hfil\hsize=7.5em\MakeUppercase{\mdseries\romannumeral#1}.\ \hfilneg}}
+\newcommand{\addtocchapterspace}{\hspace*{-5em}\vbox{\hfil\hsize=7.5em\ \hfilneg}}
 
 \renewcommand{\cftchapterbreak}{\vspace*{-0.93em}}
 
@@ -575,9 +587,11 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 }
 
 \AtBeginDocument{\globalcolor{TNormalColor}}
-  
-% Removes the header from odd empty pages at the end of chapters
+
+\RequirePackage{appendix}
+
 \makeatletter
+% Removes the header from odd empty pages at the end of chapters
 \renewcommand{\cleardoublepage}{
 \clearpage\ifodd\c@page\else
 \hbox{}
