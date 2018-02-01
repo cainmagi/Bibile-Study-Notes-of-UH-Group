@@ -468,7 +468,7 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
   
 }
 \chapterstyle{plroman}
-\renewcommand{\chapternumberline}[1]{\hspace*{-5em}\vbox{\hfil\hsize=7.5em\protect\chapnumcase{#1}.\ \hfilneg}}
+\renewcommand{\chapternumberline}[1]{\hspace*{-5em}\vbox{\hfil\protect\hsize=7.5em\protect\chapnumcase{#1}.\ \hfilneg}}
 %%% customizing of table of contents
 
 \renewcommand{\cftchapterfont}{\scshape\mdseries}
@@ -477,7 +477,7 @@ text=gray, rectangle, rounded corners, right,minimum height=.3cm]
 
 \renewcommand{\cftchapterpagefont}{\scshape\mdseries}
 
-\newcommand{\addtocchapterspace}{\hspace*{-5em}\vbox{\hfil\hsize=7.5em\ \hfilneg}}
+\newcommand{\addtocchapterspace}{\hspace{2.5em}}
 
 \renewcommand{\cftchapterbreak}{\vspace*{-0.93em}}
 
