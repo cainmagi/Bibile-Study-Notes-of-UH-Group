@@ -312,9 +312,11 @@
   }
   \newcommand{\chapFont}{\ExtBoldSansF}
   \newcommand{\secFont}{\SansF\bfseries}
+  \newcommand{\smallTitle}[1]{\ExtBoldF{#1}\normalfont\selectfont}
 \else
   \newcommand{\chapFont}{\sffamily\bfseries}
   \newcommand{\secFont}{\sffamily\bfseries}
+  \newcommand{\smallTitle}[1]{\textbold{#1}}
 \fi
 
 \newcommand{\getmark}{}
